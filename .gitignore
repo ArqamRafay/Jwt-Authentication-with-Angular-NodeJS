@@ -1,0 +1,7 @@
+# compiled output
+/dist
+/tmp
+
+# dependencies
+angForntend/node_modules
+node_server/node_modules
