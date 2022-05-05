@@ -32,17 +32,22 @@ export class AppComponent {
   }
 
   getPath() {
+    debugger;
     this.http.get(this.API_URL + '/path1')
       .subscribe(
         (res) => {
           console.log(res);
         },
         (err) => {
+          alert(err['statusText']);
           console.log(err);
         }
       );
   }
 
+  EncryptedCall(){
+    console.log('Encrypted API call here');
+  }
 
 
 }

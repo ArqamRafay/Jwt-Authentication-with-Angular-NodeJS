@@ -11,23 +11,27 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-//Root Open API
-app.get('/', (req, res) => {
-    res.json("Hello World");
-});
+
+let secret = 'some_secret';
+
 /* CODE IN BETWEEN */
 //SECRET FOR JSON WEB TOKEN
-let secret = 'some_secret';
 
 /* ALLOW PATHS WITHOUT TOKEN AUTHENTICATION */
 app.use(expressJWT({ secret: secret, algorithms: ['HS256'] })
     .unless(
         {
             path: [
-                '/token/sign'
+                '/token/sign',
+                '/encryptedData'
             ]
         }
     ));
+
+//Root Open API
+app.get('/', (req, res) => {
+    res.json("Hello World");
+});
 
 /* CREATE TOKEN FOR USE */
 app.get('/token/sign', (req, res) => {
@@ -47,8 +51,15 @@ app.get('/path1', (req, res) => {
         });
 });
 
+app.get('/encryptedData', (req, res) => {
 
-/* CODE IN BETWEEN */
+    console.log(req.body);
+    res.status(200).send({ Reply: ({ "Key 1 hun": "Baaa", "Key 2 hun": "Booo" }) })
+
+})
+
+
+
 
 
 /* LISTEN */
