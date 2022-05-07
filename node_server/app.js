@@ -51,7 +51,7 @@ app.get('/path1', (req, res) => {
         });
 });
 
-app.get('/encryptedData', (req, res) => {
+app.post('/encryptedData', (req, res) => {
 
     console.log(req.body);
     res.status(200).send({ Reply: ({ "Key 1 hun": "Baaa", "Key 2 hun": "Booo" }) })
