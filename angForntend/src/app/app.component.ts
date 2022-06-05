@@ -22,8 +22,9 @@ export class AppComponent {
         (res) => {
           console.log(res);
           if (res['token']) {
-            debugger;
+
             localStorage.setItem('token', res['token']);
+            alert('Sign in successfully')
           }
         },
         (err) => {
@@ -33,11 +34,12 @@ export class AppComponent {
   }
 
   getPath() {
-    debugger;
+
     this.http.get(this.API_URL + '/path1')
       .subscribe(
         (res) => {
           console.log(res);
+          alert('Get path done')
         },
         (err) => {
           alert(err['statusText']);
@@ -56,20 +58,31 @@ export class AppComponent {
     // let encryptedText = this._AESEncryptDecryptServiceService.encrypt("Hello World");
     // let decryptedText = this._AESEncryptDecryptServiceService.decrypt(encryptedText);
 
-    let encryptedText = this._AESEncryptDecryptServiceService.encrypt(JSON.stringify(body));
+    // let encryptedText = this._AESEncryptDecryptServiceService.encrypt(JSON.stringify(body));
     debugger;
-    let decryptedText = this._AESEncryptDecryptServiceService.decrypt(encryptedText);
+    // let decryptedText = this._AESEncryptDecryptServiceService.decrypt(encryptedText);
 
+    let body2 = {
+      "id": 2,
+      "Name": "Rafay"
+    };
+
+    let encryptedText = this._AESEncryptDecryptServiceService.encrypt(JSON.stringify(body2));
+    debugger;
     // console.log('Encrypted API call here');
-    this.http.post(this.API_URL + '/encryptedData', encryptedText).subscribe((res) => {
+    this.http.post(this.API_URL + '/encryptedData', body2).subscribe((res) => {
       debugger;
+      console.log(res['_encrypted'])
+
+      var decrypted = this._AESEncryptDecryptServiceService.decrypt(res['_encrypted']);
+      debugger;
+      console.log(decrypted.toString());
+      debugger;
+
     },
       (error) => {
         debugger
       })
 
   }
-  // How to create service api through commant in angular
-  // https://stackoverflow.com/questions/45068925/how-to-use-cryptojs-with-angular-4
-
 }

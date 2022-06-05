@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
 var expressJWT = require('express-jwt');
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
 
 const app = express();
 const port = 3000;
@@ -52,9 +54,14 @@ app.get('/path1', (req, res) => {
 });
 
 app.post('/encryptedData', (req, res) => {
-
+    console.log('API call name encrypted Data');
     console.log(req.body);
-    res.status(200).send({ Reply: ({ "Key 1 hun": "Baaa", "Key 2 hun": "Booo" }) })
+    jsonStr = '{"something":"else"}';
+    var encrypted = CryptoJS.AES.encrypt(jsonStr, 'youngunicornsrunfree');
+    // var decrypted = CryptoJS.AES.decrypt(encrypted, "youngunicornsrunfree");
+    // console.log(decrypted.toString(CryptoJS.enc.Utf8));
+
+    res.status(200).send({ Reply: ({ "Key 1 hun": "Baaa", "Key 2 hun": "Booo" }) , _encrypted: encrypted})
 
 })
 
